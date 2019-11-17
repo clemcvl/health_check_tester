@@ -1,0 +1,11 @@
+FROM alpine:latest                                                                                                                                                                                             
+                                                                                                                                                                                                               
+RUN apk add --update \                                                                                                                                                                                         
+    curl \                                                                                                                                                                                                     
+    jq \                                                                                                                                                                                                       
+    && rm -rf /var/cache/apk/*                                                                                                                                                                                 
+                                                                                                                                                                                                               
+                                                                                                                                                                                                               
+RUN /bin/sh -c 'echo "*** my healthchecktester ***"'                                                                                                                                                           
+                                                                                                                                                                                                               
+HEALTHCHECK --interval=3s CMD curl http://api.ipstack.com/check?access_key=2d24630822811323c72f4ab04138274f |jq ".country_code" |grep -qv 'FR'     
